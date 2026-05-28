@@ -1,0 +1,10 @@
+{
+  "name": "Djapero",
+  "description": "Djapero est une plateforme de livraison simple et naturelle, dédiée à la distribution de produits frais et locaux, proposant également des services de communication.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

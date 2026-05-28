@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A product for sale in the marketplace",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "priceDetail": { "type": "string" },
+        "priceGros": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["name", "category", "priceDetail"]
+    },
+    "Market": {
+      "title": "Market",
+      "description": "A local market location",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "rating": { "type": "string" },
+        "tags": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["name", "location"]
+    },
+    "TeamMember": {
+      "title": "Team Member",
+      "description": "A member of the Djapero team",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "image": { "type": "string" },
+        "phone": { "type": "string" },
+        "description": { "type": "string" },
+        "quote": { "type": "string" },
+        "special": { "type": "boolean" }
+      },
+      "required": ["name", "role"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Private user information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "isAdmin": { "type": "boolean" }
+      },
+      "required": ["uid", "email"]
+    },
+    "AppSetting": {
+      "title": "App Setting",
+      "description": "Global application properties and configurations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "data": { "type": "string" }
+      },
+      "required": ["id", "data"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Universal products"
+    },
+    "/markets/{marketId}": {
+      "schema": "Market",
+      "description": "Local markets"
+    },
+    "/team/{memberId}": {
+      "schema": "TeamMember",
+      "description": "Team members list"
+    },
+    "/users/{userId}/private/profile": {
+      "schema": "User",
+      "description": "Private profile data"
+    },
+    "/settings/{settingId}": {
+      "schema": "AppSetting",
+      "description": "Global application configurations"
+    }
+  }
+}

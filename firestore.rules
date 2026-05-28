@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'jirehstar6@gmail.com'
+      );
+    }
+
+    function isValidProduct(data) {
+      return data.name is string && data.name.size() <= 100 &&
+             data.category is string &&
+             data.priceDetail is string;
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidProduct(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /markets/{marketId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /team/{memberId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /notifications/{notifId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /affiches/{afficheId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /users/{userId}/private/profile {
+      allow read, write: if isOwner(userId);
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+
+      match /{allPaths=**} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+  }
+}
